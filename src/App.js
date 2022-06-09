@@ -87,16 +87,19 @@ function App() {
             </h1>
             <span className="bio">{bio}</span>
             <p className="pt-3 pb-0">Total Followers - {followers}</p>
-            <a href="https://salamsheikh.me">Personal Portfolio - {siteUrl}</a>
+            <span>
+              Personal Portfolio -
+              <a href="https://salamsheikh.me"> {siteUrl}</a>
+            </span>
             <h5 className="lcoation">From - {location}</h5>
             <p
-              style={{ color: "red", fontSize: "24px" }}
+              style={{ color: "crimson", fontSize: "24px" }}
               className="total_repo fw-bold"
             >
               Total Public Repository - {repo}
             </p>
-            <Button variant="primary" onClick={repoDataURL}>
-              Show My Public Repository
+            <Button className="click_button" onClick={repoDataURL}>
+              Show My Public Repositories
             </Button>
           </div>
         </div>

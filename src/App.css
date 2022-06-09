@@ -20,8 +20,17 @@ a {
   text-decoration: none;
 }
 
-button > a {
+.click_button {
+  background: transparent;
   color: #fff;
+  padding: 10px 15px;
+  border-color: #fff;
+  transition: all 0.4s ease-in-out;
+}
+
+.click_button:hover {
+  background-color: crimson;
+  border-color: #fff;
 }
 
 .github_statistics h1 {
