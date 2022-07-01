@@ -16,6 +16,10 @@
   box-shadow: 2px -1px 7px 3px rgba(0, 0, 0, 0.35);
 }
 
+img {
+  border-radius: 50%;
+}
+
 a {
   text-decoration: none;
 }
