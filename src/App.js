@@ -27,14 +27,13 @@ function App() {
         const list = result.map((item, index) => (
           <div key={index}>
             <Card
-              border="danger"
               text="white"
               bg="dark"
-              style={{ width: "15rem" }}
+              style={{ width: "15rem", border: "1px solid goldenrod" }}
             >
-              <Card.Body>
+              <Card.Body style={{ padding: "20px" }}>
                 <Card.Title
-                  style={{ textTransform: "uppercase", color: "red" }}
+                  style={{ textTransform: "uppercase", color: "goldenrod" }}
                 >
                   {item.name}
                 </Card.Title>
@@ -43,16 +42,22 @@ function App() {
                     ? item.description
                     : "Description is not avaiable in this Repository"}
                 </Card.Text>
-                <Card.Text>
-                  Repository Link <a href={item.clone_url}>{item.clone_url}</a>
-                </Card.Text>
-                <Card.Text style={{ color: "red" }}>
+                <Card.Text style={{ color: "goldenrod" }}>
                   Default Branch: {item.default_branch}
                 </Card.Text>
                 <Card.Text style={{ color: "lightblue" }}>
                   Most Used Language: {item.language}
                 </Card.Text>
                 <Card.Text>Repo Froks: {item.forks_count}</Card.Text>
+
+                <a
+                  href={item.clone_url}
+                  alt={"link"}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Button className="repo_btn">Browse Code</Button>
+                </a>
               </Card.Body>
             </Card>
           </div>
@@ -105,11 +110,19 @@ function App() {
               <p className="pt-3 pb-0">Total Followers - {followers}</p>
               <span>
                 Personal Portfolio -
-                <a href="https://salamsheikh.me"> {siteUrl}</a>
+                <a
+                  href={siteUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "goldenrod" }}
+                >
+                  {" "}
+                  {siteUrl}
+                </a>
               </span>
               <h5 className="lcoation">From - {location}</h5>
               <p
-                style={{ color: "crimson", fontSize: "24px" }}
+                style={{ color: "goldenrod", fontSize: "24px" }}
                 className="total_repo fw-bold"
               >
                 Total Public Repository - {repo}

@@ -33,8 +33,8 @@ a {
 }
 
 .click_button:hover {
-  background-color: crimson;
-  border-color: #fff;
+  background-color: goldenrod;
+  border-color: goldenrod;
 }
 
 .github_statistics h1 {
@@ -43,7 +43,10 @@ a {
 }
 
 .github_statistics h1 > span {
-  font-size: 18px;
+  font-size: 20px;
+  color: goldenrod;
+  margin-right: 10px;
+  letter-spacing: 2px;
 }
 
 .bio {
@@ -54,6 +57,19 @@ a {
 h5 {
   font-size: 25px;
   padding: 10px 0;
+}
+
+.repo_btn {
+  background: transparent;
+  border: 1px solid goldenrod;
+  color: white;
+  transition: 0.2s ease-in;
+}
+
+.repo_btn:hover {
+  background-color: goldenrod;
+  color: black;
+  border-color: goldenrod;
 }
 
 @media screen and (max-width: 468px) {
