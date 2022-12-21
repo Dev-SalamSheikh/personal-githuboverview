@@ -4,6 +4,8 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import Loader from "./Loader";
+import Pagination from "./Pagiantion";
+import axios from "axios";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,61 +16,34 @@ function App() {
   const [siteUrl, setSiteUrl] = useState();
   const [location, setLocation] = useState();
   const [repo, setRepo] = useState();
-  const [repoData, setRepoData] = useState();
+  const [test, setTest] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(8);
 
-  async function repoDataURL() {
-    setIsLoading(true);
-    fetch(
-      "https://api.github.com/users/Dev-SalamSheikh/repos?per_page=100&type=owner"
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        const list = result.map((item, index) => (
-          <div key={index}>
-            <Card
-              text="white"
-              bg="dark"
-              style={{ width: "15rem", border: "1px solid goldenrod" }}
-            >
-              <Card.Body style={{ padding: "20px" }}>
-                <Card.Title
-                  style={{ textTransform: "uppercase", color: "goldenrod" }}
-                >
-                  {item.name}
-                </Card.Title>
-                <Card.Text>
-                  {item.description
-                    ? item.description
-                    : "Description is not avaiable in this Repository"}
-                </Card.Text>
-                <Card.Text style={{ color: "goldenrod" }}>
-                  Default Branch: {item.default_branch}
-                </Card.Text>
-                <Card.Text style={{ color: "lightblue" }}>
-                  Most Used Language: {item.language}
-                </Card.Text>
-                <Card.Text>Repo Froks: {item.forks_count}</Card.Text>
+  // Paginate Stuffs
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPost = posts.slice(firstPostIndex, lastPostIndex);
 
-                <a
-                  href={item.clone_url}
-                  alt={"link"}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Button className="repo_btn">Browse Code</Button>
-                </a>
-              </Card.Body>
-            </Card>
-          </div>
-        ));
-        setRepoData(list);
+  // Change Page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  useEffect(() => {
+    if (test === true) {
+      const fetchPost = async () => {
+        setIsLoading(true);
+        const res = await axios.get(
+          "https://api.github.com/users/Dev-SalamSheikh/repos?per_page=100&type=owner"
+        );
+        setPosts(res.data);
         setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+      };
+      fetchPost();
+    }
+  }, [test]);
+
+  console.log(posts);
 
   useEffect(() => {
     setIsLoading(true);
@@ -91,6 +66,7 @@ function App() {
       );
   }, []);
 
+  console.log(currentPage);
   return (
     <>
       {isLoading ? (
@@ -127,17 +103,62 @@ function App() {
               >
                 Total Public Repository - {repo}
               </p>
-              <Button className="click_button" onClick={repoDataURL}>
+              <Button className="click_button" onClick={() => setTest(true)}>
                 Show All Public Repositories
               </Button>
             </div>
           </div>
 
           <div className="mt-5 d-flex flex-row flex-wrap align-items-center justify-content-center text-center gap-5">
-            {repoData}
+            {currentPost.map((item, index) => (
+              <div key={index}>
+                <Card
+                  text="white"
+                  bg="dark"
+                  style={{ width: "15rem", border: "1px solid goldenrod" }}
+                >
+                  <Card.Body style={{ padding: "20px" }}>
+                    <Card.Title
+                      style={{
+                        textTransform: "uppercase",
+                        color: "goldenrod",
+                      }}
+                    >
+                      {item.name}
+                    </Card.Title>
+                    <Card.Text>
+                      {item.description
+                        ? item.description
+                        : "Description is not avaiable in this Repository"}
+                    </Card.Text>
+                    <Card.Text style={{ color: "goldenrod" }}>
+                      Default Branch: {item.default_branch}
+                    </Card.Text>
+                    <Card.Text style={{ color: "lightblue" }}>
+                      Most Used Language: {item.language}
+                    </Card.Text>
+                    <Card.Text>Repo Froks: {item.forks_count}</Card.Text>
+
+                    <a
+                      href={item.clone_url}
+                      alt={"link"}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Button className="repo_btn">Browse Code</Button>
+                    </a>
+                  </Card.Body>
+                </Card>
+              </div>
+            ))}
           </div>
         </Container>
       )}
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={posts.length}
+        paginate={paginate}
+      />
     </>
   );
 }
