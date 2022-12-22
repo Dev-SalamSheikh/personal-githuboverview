@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import React from "react";
 
-const Pagination = ({ totalPosts, postsPerPage, paginate }) => {
+const Pagination = ({ totalPosts, postsPerPage, paginate, currentPage }) => {
   let pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
@@ -21,15 +21,17 @@ const Pagination = ({ totalPosts, postsPerPage, paginate }) => {
                 cursor: "pointer",
               }}
             >
-              <span onClick={() => paginate(page)}>
+              <span onClick={(e) => paginate(page, e)}>
                 <a
-                  className="page-link"
                   style={{
                     backgroundColor: "goldenrod",
                     borderTop: "none",
                     borderBottom: "none",
                     color: "white",
                   }}
+                  className={`${
+                    page === currentPage ? "active" : ""
+                  } page-link`}
                 >
                   {page}
                 </a>

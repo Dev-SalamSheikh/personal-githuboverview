@@ -27,7 +27,10 @@ function App() {
   const currentPost = posts.slice(firstPostIndex, lastPostIndex);
 
   // Change Page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber, e) => {
+    setCurrentPage(pageNumber);
+    e.target.classList.add("active");
+  };
 
   useEffect(() => {
     if (test === true) {
@@ -158,6 +161,7 @@ function App() {
         postsPerPage={postsPerPage}
         totalPosts={posts.length}
         paginate={paginate}
+        currentPage={currentPage}
       />
     </>
   );
